@@ -17,4 +17,9 @@ describe GitRun do
     assert_equal "This is the first revision of example.md\n",
       GitRun.run('8e65d39fcf691f3c020c3bfbe1ac4a90cb13237d', 'cat example.md')
   end
+
+  it "returns to the original revision after running" do
+    GitRun.run('8e65d39fcf691f3c020c3bfbe1ac4a90cb13237d', 'cat example.md')
+    assert `git status`.include?('working directory clean')
+  end
 end

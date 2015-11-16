@@ -2,7 +2,10 @@ require 'rugged'
 
 class GitRun
   def self.run(revision, command)
-    Rugged::Repository.new('.').checkout_tree(revision, strategy: :force)
-    `#{command}`
+    repository = Rugged::Repository.new('.')
+    repository.checkout_tree(revision, strategy: :force)
+    output = `#{command}`
+    repository.reset('master', :hard)
+    output
   end
 end
