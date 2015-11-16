@@ -1,0 +1,15 @@
+GEM
+  remote: http://rubygems.org/
+  specs:
+    minitest (5.8.2)
+    rugged (0.23.3)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  minitest
+  rugged
+
+BUNDLED WITH
+   1.10.6
