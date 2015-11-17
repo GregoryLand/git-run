@@ -24,5 +24,10 @@ describe "git run" do
       assert_equal "This is the first revision of example.md\n",
         `#{bin_path} 8e65d3 cat example.md`
     end
+
+    it "returns an error when the revision does not exist" do
+      assert_equal "'nope' is not a revision in this repository.\n",
+        `#{bin_path} nope ls 2>&1`
+    end
   end
 end

@@ -1,8 +1,12 @@
 #!/usr/bin/env ruby
 require_relative '../lib/git_run'
 
+revision = ARGV.shift
+
 begin
-  print GitRun.run(ARGV.shift, ARGV.join(' '))
+  print GitRun.run(revision, ARGV.join(' '))
 rescue Rugged::RepositoryError
   $stderr.puts "#{Dir.pwd} is not a git repository."
+rescue Rugged::ReferenceError
+  $stderr.puts "'#{revision}' is not a revision in this repository."
 end
