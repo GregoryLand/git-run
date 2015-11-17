@@ -1,3 +1,9 @@
+PATH
+  remote: .
+  specs:
+    git-run (0.0.0)
+      rugged (~> 0.23)
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -8,8 +14,8 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  git-run!
   minitest
-  rugged
 
 BUNDLED WITH
    1.10.6
