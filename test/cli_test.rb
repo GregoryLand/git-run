@@ -36,6 +36,13 @@ describe "git run" do
       assert_equal [
         "Usage: git run [options] <revision> <command>\n",
         "    -h, --help                       Show this message\n"
+      ].join, `#{bin_path}`
+    end
+
+    it "shows the help message when passing the -h flag" do
+      assert_equal [
+        "Usage: git run [options] <revision> <command>\n",
+        "    -h, --help                       Show this message\n"
       ].join, `#{bin_path} -h`
     end
   end

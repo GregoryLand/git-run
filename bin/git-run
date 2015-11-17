@@ -9,6 +9,11 @@ OptionParser.new do |opts|
     puts opts
     exit
   end
+
+  if opts.default_argv.length < 2
+    puts opts
+    exit
+  end
 end.parse!
 
 revision = ARGV.shift
