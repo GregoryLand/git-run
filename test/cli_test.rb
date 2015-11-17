@@ -21,8 +21,8 @@ describe "git run" do
     end
 
     it "runs a command in a specific revision" do
-      assert_equal "This is the first revision of example.md\n",
-        `#{bin_path} 8e65d3 cat example.md`
+      assert_equal "...FF\n",
+        `#{bin_path} ad1211 ruby test.rb`
     end
 
     it "returns an error when the revision does not exist" do
