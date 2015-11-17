@@ -5,7 +5,7 @@ Gem::Specification.new do |s|
   s.version     = '0.0.0'
   s.date        = Date.today.to_s
   s.summary     = "git run"
-  s.description = "git run runs commands on git revisions"
+  s.description = "git run runs commands in git revisions"
   s.authors     = ["Jeff Kreeftmeijer"]
   s.email       = 'jeff@kreeftmeijer.nl'
   s.files       = ["lib/git_run.rb"]
