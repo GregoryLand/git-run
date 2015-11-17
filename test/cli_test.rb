@@ -30,4 +30,13 @@ describe "git run" do
         `#{bin_path} nope ls 2>&1`
     end
   end
+
+  describe "command line options" do
+    it "shows the help message" do
+      assert_equal [
+        "Usage: git run [options] <revision> <command>\n",
+        "    -h, --help                       Show this message\n"
+      ].join, `#{bin_path} -h`
+    end
+  end
 end
