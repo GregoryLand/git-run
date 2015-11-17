@@ -15,7 +15,7 @@ PLATFORMS
 
 DEPENDENCIES
   git-run!
-  minitest
+  minitest (~> 5.8)
 
 BUNDLED WITH
    1.10.6

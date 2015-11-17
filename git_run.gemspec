@@ -14,5 +14,5 @@ Gem::Specification.new do |s|
   s.license     = 'MIT'
 
   s.add_runtime_dependency 'rugged', '~> 0.23'
-  s.add_development_dependency 'minitest'
+  s.add_development_dependency 'minitest', '~> 5.8'
 end
