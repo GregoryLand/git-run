@@ -24,4 +24,6 @@ rescue Rugged::RepositoryError
   $stderr.puts "#{Dir.pwd} is not a git repository."
 rescue Rugged::ReferenceError
   $stderr.puts "'#{revision}' is not a revision in this repository."
+rescue GitRun::DirtyRepositoryError
+  $stderr.puts "The repository at #{Dir.pwd} is in a dirty state."
 end

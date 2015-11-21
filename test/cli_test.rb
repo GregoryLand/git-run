@@ -29,6 +29,21 @@ describe "git run" do
       assert_equal "'nope' is not a revision in this repository.\n",
         `#{bin_path} nope ls 2>&1`
     end
+
+    describe "when the repository is in a dirty state" do
+      before do
+        File.delete('test.rb')
+      end
+
+      after do
+        `git checkout test.rb`
+      end
+
+      it "returns an error" do
+        assert_equal "The repository at #{examples_path} is in a dirty state.\n",
+          `#{bin_path} ad1211 ls 2>&1`
+      end
+    end
   end
 
   describe "command line options" do
