@@ -20,10 +20,6 @@ revision = ARGV.shift
 
 begin
   print GitRun.run(revision, ARGV.join(' '))
-rescue GitRun::NoRepositoryError
-  $stderr.puts "#{Dir.pwd} is not a git repository."
-rescue GitRun::RevisionNotFoundError
-  $stderr.puts "'#{revision}' is not a revision in this repository."
-rescue GitRun::DirtyRepositoryError
-  $stderr.puts "The repository at #{Dir.pwd} is in a dirty state."
+rescue GitRun::Error => e
+  $stderr.puts e.message
 end

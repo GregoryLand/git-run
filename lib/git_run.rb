@@ -3,7 +3,7 @@ require 'rugged'
 class GitRun
 
   def self.run(revision, command)
-    raise DirtyRepositoryError if repository.changes.any?
+    raise DirtyRepositoryError.new(Dir.pwd) if repository.changes.any?
 
     return repository.in_revision(revision) { `#{command}` }
   end
@@ -12,7 +12,7 @@ class GitRun
     begin
       Repository.new('.')
     rescue Rugged::RepositoryError
-      raise NoRepositoryError
+      raise NoRepositoryError.new(Dir.pwd)
     end
   end
 
@@ -29,18 +29,33 @@ class GitRun
         output = yield
         reset('master', :hard)
       rescue Rugged::ReferenceError
-        raise RevisionNotFoundError
+        raise RevisionNotFoundError.new(revision)
       end
       output
     end
   end
 
-  class NoRepositoryError < StandardError
+  class Error < StandardError
+    def initialize(subject)
+      @subject = subject
+    end
   end
 
-  class RevisionNotFoundError < StandardError
+  class NoRepositoryError < Error
+    def message
+      "#{@subject} is not a git repository."
+    end
   end
 
-  class DirtyRepositoryError < StandardError
+  class RevisionNotFoundError < Error
+    def message
+      "'#{@subject}' is not a revision in this repository."
+    end
+  end
+
+  class DirtyRepositoryError < Error
+    def message
+      "The repository at #{@subject} is in a dirty state."
+    end
   end
 end
