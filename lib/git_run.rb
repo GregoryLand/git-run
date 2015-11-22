@@ -1,16 +1,19 @@
 require 'rugged'
 
 class GitRun
+
   def self.run(revision, command)
-    raise GitRun::DirtyRepositoryError if repository.changes.any?
+    raise DirtyRepositoryError if repository.changes.any?
+
     return repository.in_revision(revision) { `#{command}` }
   end
 
   def self.repository
-    Repository.new('.')
-  end
-
-  class DirtyRepositoryError < StandardError
+    begin
+      Repository.new('.')
+    rescue Rugged::RepositoryError
+      raise NoRepositoryError
+    end
   end
 
   class Repository < Rugged::Repository
@@ -21,10 +24,23 @@ class GitRun
     end
 
     def in_revision(revision)
-      checkout_tree(revision, strategy: :force)
-      output = yield
-      reset('master', :hard)
+      begin
+        checkout_tree(revision, strategy: :force)
+        output = yield
+        reset('master', :hard)
+      rescue Rugged::ReferenceError
+        raise RevisionNotFoundError
+      end
       output
     end
+  end
+
+  class NoRepositoryError < StandardError
+  end
+
+  class RevisionNotFoundError < StandardError
+  end
+
+  class DirtyRepositoryError < StandardError
   end
 end
