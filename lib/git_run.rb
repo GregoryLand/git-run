@@ -24,10 +24,11 @@ class GitRun
     end
 
     def in_revision(revision)
+      original_revision = head.name
       begin
         checkout_tree(revision, strategy: :force)
         output = yield
-        reset('master', :hard)
+        reset(original_revision, :hard)
       rescue Rugged::ReferenceError
         raise RevisionNotFoundError.new(revision)
       end

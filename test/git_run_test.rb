@@ -30,6 +30,21 @@ describe GitRun do
       end
     end
 
+    describe "in a different branch" do
+      before do
+        `git checkout develop`
+      end
+
+      after do
+        `git checkout master`
+      end
+
+      it "returns to the original revision after running" do
+        GitRun.run('master', 'ruby test.rb')
+        assert `git status`.include?('working directory clean')
+      end
+    end
+
     describe "when the repository is in a dirty state" do
       before do
         File.delete('test.rb')
